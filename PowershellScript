@@ -1,0 +1,21 @@
+$foundryJson = ".\out\DiplomaRegistry.sol\DiplomaRegistry.json"
+$backendPath = "A:\Coding\Projects\IntellijProjects\Bachelor4AllBackend"
+
+$abiOut = Join-Path $backendPath "src\main\resources\abi\DiplomaRegistry.abi"
+$binOut = Join-Path $backendPath "src\main\resources\bin\DiplomaRegistry.bin"
+
+$j = Get-Content $foundryJson -Raw | ConvertFrom-Json
+
+# ABI
+($j.abi | ConvertTo-Json -Depth 100) | Out-File $abiOut -Encoding utf8
+
+# BIN (Foundry usually stores it in bytecode.object)
+$bin = $j.bytecode.object
+if (-not $bin) { $bin = $j.bytecode }   # fallback, just in case
+
+# Some tools want no 0x prefix
+$bin = $bin -replace "^0x",""
+$bin | Out-File $binOut -Encoding utf8
+
+"ABI -> $abiOut"
+"BIN -> $binOut"
