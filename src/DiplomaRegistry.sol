@@ -2,15 +2,15 @@
 pragma solidity ^0.8.20;
 
 contract DiplomaRegistry {
-    address public issuer; // university
+    address public issuer;
     uint256 public nextId;
 
     struct Diploma {
         uint256 id;
-        address student;        // student wallet
-        bytes32 documentHash;   // hash of PDF
-        uint256 issuedAt;       // block timestamp
-        string institution;     // e.g. "Bachelor4All"
+        address student;
+        bytes32 documentHash;
+        uint256 issuedAt;
+        string institution;
     }
 
     mapping(uint256 => Diploma) public diplomas;
